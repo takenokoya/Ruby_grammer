@@ -24,3 +24,35 @@ puts '#######'
 add_proc = proc { |a = 0, b = 0| puts a + b }
 add_proc.call(30, 40)
 puts '#######'
+
+# procオブジェクトを生成するための4つの方法
+a = Proc.new { |a, b| a + b }
+b = proc { |a, b| a + b }
+c = ->(a, b) { a + b } # lambda
+d = lambda { |a, b| a + b } # lambda
+puts a
+puts b
+puts c
+puts d
+
+# Proc.new と lambda の違い
+# Proc.new の場合
+add_proc = Proc.new { |a, b| puts a.to_i + b.to_i }
+add_proc.call(10, 20)
+# Proc.new の場合は引数が少ないまたは多い場合でも実行可能。足りないまたは余分な引数は無視される
+add_proc.call(10)
+add_proc.call(10, 20, 30)
+add_proc.call
+# lambda は Proc.new よりも引数のチェックが厳密
+add_lambda = ->(a, b) { puts a.to_i + b.to_i }
+add_lambda.call(10, 20) # OK
+# lambda は引数が多かったり少なかったりした場合は ArgumentError
+#add_lambda.call
+#add_lambda.call(10)
+#add_lambda.call(10, 20, 30)
+
+puts add_proc.class
+puts add_proc.lambda?
+
+puts add_lambda.class
+puts add_lambda.lambda?
