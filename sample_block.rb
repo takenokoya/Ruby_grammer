@@ -2,6 +2,8 @@ def greeting_common(texts, &block)
   puts texts[0]
   # callメソッドを使ってブロックを実行
   puts block.call(texts[1])
+  # 引数のブロックはprocオブジェクトである
+  puts block.class
   puts texts[2]
   puts '########'
 end
@@ -30,6 +32,7 @@ def greeting(&block)
   text =
     if block.arity == 1
       # arityメソッドはブロック引数の個数をカウントする
+      # arityメソッドはProcクラスのインスタンスメソッドである
       yield 'an apple'
     elsif block.arity == 2
       yield '2個', 'です'
@@ -46,3 +49,10 @@ end
 greeting do |text, word|
   text * 2 + word * 2
 end
+
+# 引数にブロックではなくProcクラスのオブジェクトを渡すこともできる
+repeat_proc = Proc.new { |text| (text + "\n") * 2 }
+# Karnelモジュールのメソッドを使ってもProcオブジェクトは生成できる
+# repeat_proc = proc { |text| (text + "\n") * 2 }
+# Procオブジェクトをブロック引数として渡すときはブロックを渡すときと同様に & をつける
+greeting(&repeat_proc)
