@@ -1,5 +1,6 @@
 def greeting_common(texts, &block)
   puts texts[0]
+  # callメソッドを使ってブロックを実行
   puts block.call(texts[1])
   puts texts[2]
   puts '########'
@@ -21,7 +22,7 @@ greeting_ja do |text|
 end
 
 greeting_en do |text|
-  text * 2
+  text.upcase
 end
 
 
