@@ -26,3 +26,23 @@ greeting_en do |text|
 end
 
 
+def greeting(&block)
+  text =
+    if block.arity == 1
+      # arityメソッドはブロック引数の個数をカウントする
+      yield 'an apple'
+    elsif block.arity == 2
+      yield '2個', 'です'
+    end
+  puts text
+end
+
+# 1個のブロック引数でメソッド呼び出し
+greeting do |t|
+  t.upcase
+end
+
+# 2個のブロック引数でメソッド呼び出し
+greeting do |text, word|
+  text * 2 + word * 2
+end
